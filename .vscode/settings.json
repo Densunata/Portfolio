@@ -1,0 +1,44 @@
+{
+  "files.exclude": {
+    "**/node_modules": true,
+    "dist": true,
+    "coverage": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "dist": true,
+    "coverage": true,
+    "package-lock.json": true
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "dist/**": true,
+    "coverage/**": true
+  },
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.experimental.configFile": "app/src/styles/globals.css",
+  "tailwindCSS.classFunctions": ["cn", "cva"],
+
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": "package-lock.json",
+    "tsconfig.json": "tsconfig.*.json",
+    "vite.config.ts": "vitest.config.ts",
+    ".prettierrc.json": ".prettierignore",
+    "*.tsx": "${capture}.test.tsx",
+    "*.ts": "${capture}.test.ts"
+  }
+}

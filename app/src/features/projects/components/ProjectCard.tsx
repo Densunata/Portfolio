@@ -1,0 +1,47 @@
+import { ArrowRight } from 'lucide-react'
+import { Link } from 'react-router'
+
+import { TechnologyList } from '@/components/shared/TechnologyBadge'
+import { Card } from '@/components/ui/card'
+import type { Project } from '@/types/content'
+
+import { ProjectImage } from './ProjectImage'
+
+interface ProjectCardProps {
+  project: Project
+}
+
+export function ProjectCard({ project }: ProjectCardProps) {
+  return (
+    <Card className="group h-full gap-0 py-0 shadow-xs transition-shadow hover:shadow-md">
+      <ProjectImage project={project} />
+      <div className="flex flex-1 flex-col gap-4 p-6">
+        <div>
+          <p className="text-xs font-semibold tracking-wider text-primary uppercase">
+            {project.category}
+          </p>
+          <h3 className="mt-2 text-lg font-semibold text-foreground">{project.name}</h3>
+        </div>
+        <p className="text-muted-foreground">{project.summary}</p>
+        {project.role && (
+          <p className="text-foreground">
+            <span className="font-medium">Role:</span> {project.role}
+          </p>
+        )}
+        <TechnologyList items={project.tech} />
+        <div className="mt-auto pt-2">
+          <Link
+            to={`/projects/${project.slug}`}
+            className="inline-flex items-center gap-1.5 rounded-sm text-sm font-semibold text-primary underline-offset-4 hover:underline"
+          >
+            View details <span className="sr-only">about {project.name}</span>
+            <ArrowRight
+              aria-hidden="true"
+              className="size-4 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none"
+            />
+          </Link>
+        </div>
+      </div>
+    </Card>
+  )
+}
