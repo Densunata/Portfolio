@@ -84,11 +84,17 @@ describe('/contact', () => {
     expect(screen.queryByRole('link', { name: /github/i })).not.toBeInTheDocument()
   })
 
-  it('keeps the resume download disabled until the redacted PDF exists', async () => {
+  it('links to the redacted resume for viewing and download', async () => {
     await renderPage('/contact')
 
-    expect(screen.getByRole('button', { name: 'Resume coming soon' })).toBeDisabled()
-    expect(document.querySelector('a[href$=".pdf"]')).toBeNull()
+    expect(
+      screen.getByRole('link', { name: /^View My Resume\s*\(opens in a new tab\)$/ }),
+    ).toHaveAttribute('href', '/resume/Raiden-Victor-CV.pdf')
+    expect(screen.getByRole('link', { name: 'Download resume (PDF)' })).toHaveAttribute(
+      'href',
+      '/resume/Raiden-Victor-CV.pdf',
+    )
+    expect(screen.queryByRole('button', { name: 'Resume coming soon' })).not.toBeInTheDocument()
   })
 })
 

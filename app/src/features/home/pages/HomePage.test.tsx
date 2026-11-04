@@ -60,14 +60,20 @@ describe('HomePage', () => {
     }
   })
 
-  it('marks the resume as pending instead of linking to a missing file', async () => {
+  it('offers the resume to view in a new tab and to download', async () => {
     renderRoute('/')
     await screen.findByRole('heading', { level: 1 })
 
-    expect(profile.resume.available).toBe(false)
-    for (const button of screen.getAllByRole('button', { name: 'Resume coming soon' })) {
-      expect(button).toBeDisabled()
+    expect(profile.resume.available).toBe(true)
+    const views = screen.getAllByRole('link', { name: /^View My Resume/ })
+    const downloads = screen.getAllByRole('link', { name: 'Download resume (PDF)' })
+    expect(views.length).toBeGreaterThan(0)
+    expect(downloads).toHaveLength(views.length)
+    for (const link of [...views, ...downloads]) {
+      expect(link).toHaveAttribute('href', profile.resume.href)
     }
-    expect(screen.queryByRole('link', { name: /resume/i })).not.toBeInTheDocument()
+    for (const link of views) expect(link).toHaveAttribute('target', '_blank')
+    for (const link of downloads) expect(link).toHaveAttribute('download')
+    expect(screen.queryByRole('button', { name: 'Resume coming soon' })).not.toBeInTheDocument()
   })
 })

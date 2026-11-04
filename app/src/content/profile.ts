@@ -23,9 +23,9 @@ export const profile: Profile = {
     },
   ],
   resume: {
-    href: '/resume/RaidenVictor-CV-Public.pdf',
-    // Pending: flip to true once the redacted PDF is added to app/public/resume/.
-    available: false,
+    href: '/resume/Raiden-Victor-CV.pdf',
+    // Redacted CV (no phone number or street address) in app/public/resume/.
+    available: true,
   },
   contactMessage:
     'I am open to opportunities in software and system development. Whether you are a recruiter, an employer, or someone with a project in mind, feel free to reach out by email or LinkedIn.',

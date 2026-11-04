@@ -27,7 +27,7 @@ app/
   public/           copied as-is to the site root (/favicon.svg, /images/..., /resume/...)
     favicon.svg, apple-touch-icon.png, og-image.png (1200×630 link preview), robots.txt
     images/         project screenshots
-    resume/         redacted public CV (PDF); not present yet
+    resume/         redacted public CV (Raiden-Victor-CV.pdf)
 ```
 
 Imports use the `@/` alias (→ `app/src/`), configured in `tsconfig.json`, `tsconfig.app.json`, and `vite.config.ts`. `index.html` and all tool configs stay at the project root, so Vite's root and every `npm` script are unchanged. Vite is pointed at `app/public` via `publicDir`.
@@ -41,7 +41,7 @@ Imports use the `@/` alias (→ `app/src/`), configured in `tsconfig.json`, `tsc
 | `/projects`       | All projects                                               |
 | `/projects/:slug` | Project case study (slug from content)                     |
 | `/experience`     | Employment history with links to related case studies      |
-| `/contact`        | Email, LinkedIn, location, resume (pending)                |
+| `/contact`        | Email, LinkedIn, location, resume (view and download)      |
 | `*`               | Not found (`noindex`)                                      |
 
 The sidebar (large screens), the mobile menu, and the footer link to the pages. `NavLink` sets `aria-current="page"` on the current link, and Projects stays highlighted on case-study pages.
