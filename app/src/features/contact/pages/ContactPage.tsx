@@ -1,8 +1,9 @@
-import { Mail } from 'lucide-react'
+import { AtSign, Mail } from 'lucide-react'
 
 import { PageHeader } from '@/components/shared/PageHeader'
 import { ResumeButton } from '@/components/shared/ResumeButton'
 import { Section } from '@/components/shared/Section'
+import { SectionGrid } from '@/components/shared/SectionGrid'
 import { Button } from '@/components/ui/button'
 import { profile } from '@/content/profile'
 import { pages } from '@/content/site'
@@ -33,9 +34,11 @@ export function ContactPage() {
           </>
         }
       />
-      <Section id="contact-details" title="Contact details">
-        <ContactMethods />
-      </Section>
+      <SectionGrid>
+        <Section id="contact-details" title="Contact details" icon={AtSign}>
+          <ContactMethods />
+        </Section>
+      </SectionGrid>
     </>
   )
 }

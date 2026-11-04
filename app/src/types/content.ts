@@ -37,8 +37,10 @@ export interface Profile {
   tagline: string
   /** Bio paragraphs for the About section. */
   summary: string[]
-  /** Short list shown in the hero summary card. */
+  /** Short list shown in the hero core-stack strip. */
   coreStack: string[]
+  /** Visible heading for `coreStack` in the hero strip. */
+  coreStackHeading: string
   location: string
   email: string
   socials: SocialLink[]

@@ -4,12 +4,17 @@ export interface NavItem {
   href: string
 }
 
-/** Primary navigation (header, mobile menu, footer). */
+/** Primary navigation (sidebar, mobile menu, footer). */
 export const navItems: NavItem[] = [
   { label: 'About', href: '/about' },
   { label: 'Projects', href: '/projects' },
   { label: 'Experience', href: '/experience' },
 ]
 
+export const homeNavItem: NavItem = { label: 'Home', href: '/' }
+
 /** Rendered as the header call-to-action. */
 export const contactNavItem: NavItem = { label: 'Contact', href: '/contact' }
+
+/** Every page, in display order: Home, primary items, Contact. */
+export const siteNavItems: NavItem[] = [homeNavItem, ...navItems, contactNavItem]

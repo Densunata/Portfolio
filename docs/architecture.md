@@ -8,8 +8,9 @@ app/
     app/            App.tsx, routes.tsx (route table), providers.tsx
     components/
       ui/           shadcn/ui generated primitives
-      shared/       cross-feature components: layout (SiteLayout, Navbar, MobileNavigation, Footer),
-                    building blocks (Container, PageHeader, Section, SectionHeading, Reveal),
+      shared/       cross-feature components: layout (SiteLayout, Sidebar, Navbar, MobileNavigation, Footer),
+                    building blocks (Container, PageHeader, SectionGrid, Section, SectionHeading,
+                    IconTile, Reveal),
                     and SocialLinks, ResumeButton, TechnologyBadge/TechnologyList, NotFoundPage
     features/
       home|about|projects|experience|contact/
@@ -43,7 +44,7 @@ Imports use the `@/` alias (→ `app/src/`), configured in `tsconfig.json`, `tsc
 | `/contact`        | Email, LinkedIn, location, resume (pending)                |
 | `*`               | Not found (`noindex`)                                      |
 
-The header, mobile menu, and footer link to the pages. `NavLink` sets `aria-current="page"` on the current link, and Projects stays highlighted on case-study pages.
+The sidebar (large screens), the mobile menu, and the footer link to the pages. `NavLink` sets `aria-current="page"` on the current link, and Projects stays highlighted on case-study pages.
 
 ## Conventions
 
@@ -57,7 +58,12 @@ The full rules for both people and AI agents are in [`config/ai/agents/instructi
 
 ## Homepage
 
-`features/home/pages/HomePage.tsx` composes the sections in order: Hero, About, Skills, What I Do, Featured Projects, Experience, Education, Certifications, Contact. Each section uses the shared `Section` component and lives in the feature it belongs to. The dedicated pages reuse the same section and list components. In-page links such as the hero's "View projects" (`/#projects`) still work, because React Router's `ScrollRestoration` scrolls to the target section.
+`features/home/pages/HomePage.tsx` composes the sections in order: Hero (with the core-stack strip), About, Skills, What I Do, Featured Projects, Experience, Education, Certifications, Contact. Each section uses the shared `Section` component and lives in the feature it belongs to. The dedicated pages reuse the same section and list components. In-page links such as the hero's "View projects" (`/#projects`) still work, because React Router's `ScrollRestoration` scrolls to the target section.
+
+## Layout
+
+- **Shell** (`SiteLayout`): on `lg` and up, a sticky `Sidebar` (profile, social links, primary navigation) sits beside the content. Below `lg`, a compact top bar (`Navbar`) with the disclosure menu (`MobileNavigation`) replaces it. Both render in the DOM; CSS hides one, so only the sidebar carries the `Primary` navigation landmark.
+- **Bento panels**: pages place `Section` panels inside a `SectionGrid` (a tinted, 12-column board on `lg`). Each `Section` takes `span="full" | "wide" | "narrow"` (12, 7, or 5 columns). Section bodies are container-query contexts (`@container`), so lists inside (project grid, experience, contact methods) adapt to the panel's width with `@2xl:`/`@3xl:` variants rather than viewport breakpoints.
 
 ## SEO and metadata
 

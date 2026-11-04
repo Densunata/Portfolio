@@ -27,7 +27,7 @@ interface ProjectFactsProps {
 /** Key facts about a project. Facts missing from content are omitted, not guessed. */
 export function ProjectFacts({ project }: ProjectFactsProps) {
   return (
-    <Card className="gap-4 py-6">
+    <Card className="gap-4 rounded-2xl py-6 shadow-xs">
       <CardHeader className="px-6">
         <CardTitle>
           <h2

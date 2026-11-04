@@ -12,6 +12,7 @@ export const profile: Profile = {
     'Equipped with strong analytical, problem-solving, and communication skills, with a passion for leveraging technology to improve business processes and user experience.',
   ],
   coreStack: ['C# / .NET', 'ASP.NET Core', 'React', 'TypeScript', 'Laravel', 'PostgreSQL'],
+  coreStackHeading: 'Technologies I work with',
   location: 'Rizal, Philippines',
   email: 'anoreraiden4@gmail.com',
   socials: [

@@ -1,3 +1,4 @@
+import { SectionGrid } from '@/components/shared/SectionGrid'
 import { AboutSection } from '@/features/about/components/AboutSection'
 import { CertificationsSection } from '@/features/about/components/CertificationsSection'
 import { EducationSection } from '@/features/about/components/EducationSection'
@@ -16,14 +17,16 @@ export function HomePage() {
   return (
     <>
       <HeroSection />
-      <AboutSection />
-      <SkillsSection />
-      <WhatIDoSection />
-      <FeaturedProjectsSection />
-      <ExperienceSection />
-      <EducationSection />
-      <CertificationsSection />
-      <ContactSection />
+      <SectionGrid>
+        <AboutSection span="wide" />
+        <SkillsSection span="narrow" />
+        <WhatIDoSection />
+        <FeaturedProjectsSection />
+        <ExperienceSection />
+        <EducationSection span="narrow" />
+        <CertificationsSection span="wide" />
+        <ContactSection />
+      </SectionGrid>
     </>
   )
 }

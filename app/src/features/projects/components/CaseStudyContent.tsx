@@ -22,7 +22,7 @@ export function CaseStudyContent({ project }: CaseStudyContentProps) {
   const overview = hasItems(caseStudy?.overview) ? caseStudy.overview : [project.summary]
 
   return (
-    <div className="space-y-12">
+    <div className="divide-y *:py-10 *:first:pt-0 *:last:pb-0">
       <CaseStudySection id="overview" title="Overview">
         <div className="space-y-4">
           {overview.map((paragraph) => (

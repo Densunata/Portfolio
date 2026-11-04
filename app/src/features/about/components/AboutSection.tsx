@@ -1,27 +1,37 @@
-import { CheckCircle2 } from 'lucide-react'
+import { CheckCircle2, UserRound } from 'lucide-react'
 
 import { Reveal } from '@/components/shared/Reveal'
-import { Section } from '@/components/shared/Section'
+import { Section, type SectionSpan } from '@/components/shared/Section'
 import { profile } from '@/content/profile'
 import { competencies } from '@/content/skills'
 
-export function AboutSection() {
+interface AboutSectionProps {
+  span?: SectionSpan
+}
+
+export function AboutSection({ span }: AboutSectionProps) {
   return (
-    <Section id="about" eyebrow="About" title="Software and system development">
-      <div className="grid gap-10 lg:grid-cols-[3fr_2fr] lg:gap-16">
-        <Reveal className="space-y-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
+    <Section
+      id="about"
+      eyebrow="About"
+      title="Software and system development"
+      icon={UserRound}
+      span={span}
+    >
+      <div className="grid gap-6 @3xl:grid-cols-[3fr_2fr] @3xl:gap-10">
+        <Reveal className="space-y-4 text-base leading-relaxed text-muted-foreground">
           {profile.summary.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
         </Reveal>
-        <Reveal delay={0.1}>
-          <h3 className="text-sm font-semibold tracking-wider text-foreground uppercase">
+        <Reveal delay={0.1} className="rounded-xl border bg-muted/40 p-5">
+          <h3 className="text-xs font-bold tracking-[0.14em] text-foreground uppercase">
             Core competencies
           </h3>
-          <ul className="mt-4 space-y-3">
+          <ul className="mt-4 grid gap-3 @xl:grid-cols-2 @3xl:grid-cols-1">
             {competencies.map((competency) => (
-              <li key={competency} className="flex gap-3 text-foreground">
-                <CheckCircle2 aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
+              <li key={competency} className="flex gap-2.5 text-sm text-foreground">
+                <CheckCircle2 aria-hidden="true" className="mt-px size-4 shrink-0 text-primary" />
                 {competency}
               </li>
             ))}
