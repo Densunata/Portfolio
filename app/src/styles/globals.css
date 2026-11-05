@@ -3,7 +3,8 @@
 @import 'shadcn/tailwind.css';
 @import '@fontsource-variable/geist';
 
-/* Dark mode is class-based (`.dark` on <html>). No toggle yet; tokens are ready. */
+/* Dark mode is class-based: `.dark` on <html>, set by app/src/lib/theme.ts and,
+   before first paint, by the inline script in index.html. */
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -38,6 +39,7 @@
 
 /* Navy + white. Text/background pairs are chosen to meet WCAG AA (>= 4.5:1). */
 :root {
+  color-scheme: light;
   --radius: 0.625rem;
 
   --background: oklch(1 0 0);
@@ -62,19 +64,23 @@
   --ring: oklch(0.5 0.12 262);
 }
 
+/* Surface steps follow Prime's dark theme (0.18 / 0.22 / 0.26 lightness), tinted navy. */
 .dark {
-  --background: oklch(0.17 0.03 262);
+  color-scheme: dark;
+
+  /* Keep in sync with THEME_COLORS.dark in app/src/lib/theme.ts. */
+  --background: oklch(0.18 0.03 262);
   --foreground: oklch(0.97 0.005 250);
-  --card: oklch(0.21 0.035 262);
+  --card: oklch(0.22 0.035 262);
   --card-foreground: oklch(0.97 0.005 250);
-  --popover: oklch(0.21 0.035 262);
+  --popover: oklch(0.22 0.035 262);
   --popover-foreground: oklch(0.97 0.005 250);
 
   --primary: oklch(0.8 0.08 255);
   --primary-foreground: oklch(0.2 0.04 262);
-  --secondary: oklch(0.27 0.035 262);
+  --secondary: oklch(0.26 0.035 262);
   --secondary-foreground: oklch(0.97 0.005 250);
-  --muted: oklch(0.27 0.035 262);
+  --muted: oklch(0.26 0.035 262);
   --muted-foreground: oklch(0.74 0.025 255);
   --accent: oklch(0.29 0.045 262);
   --accent-foreground: oklch(0.97 0.005 250);

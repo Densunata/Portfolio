@@ -3,6 +3,8 @@ import '@testing-library/jest-dom/vitest'
 import { cleanup } from '@testing-library/react'
 import { afterEach, vi } from 'vitest'
 
+import { clearTheme, stubPrefersDark } from './theme'
+
 // jsdom does not implement scrolling; React Router's <ScrollRestoration> calls it.
 vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined)
 
@@ -26,6 +28,10 @@ class IntersectionObserverStub {
 }
 vi.stubGlobal('IntersectionObserver', IntersectionObserverStub)
 
+stubPrefersDark(false)
+
 afterEach(() => {
   cleanup()
+  clearTheme()
+  stubPrefersDark(false)
 })

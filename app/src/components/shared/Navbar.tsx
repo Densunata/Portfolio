@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 
 import { Container } from './Container'
 import { MobileNavigation } from './MobileNavigation'
+import { ThemeToggle } from './ThemeToggle'
 
 interface NavbarProps {
   className?: string
@@ -40,6 +41,7 @@ export function Navbar({ className }: NavbarProps) {
           >
             <NavLink to={contactNavItem.href}>{contactNavItem.label}</NavLink>
           </Button>
+          <ThemeToggle />
           <MobileNavigation />
         </div>
       </Container>

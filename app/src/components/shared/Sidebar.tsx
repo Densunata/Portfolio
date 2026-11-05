@@ -15,6 +15,7 @@ import { siteNavItems } from '@/lib/navigation'
 import { cn } from '@/lib/utils'
 
 import { SocialLinks } from './SocialLinks'
+import { ThemeToggle } from './ThemeToggle'
 
 const navIcons: Record<string, LucideIcon> = {
   '/': House,
@@ -32,7 +33,8 @@ interface SidebarProps {
 export function Sidebar({ className }: SidebarProps) {
   return (
     <header className={cn('sticky top-0 h-svh flex-col border-r bg-background', className)}>
-      <div className="flex flex-1 flex-col overflow-y-auto px-5 py-8">
+      <div className="relative flex flex-1 flex-col overflow-y-auto px-5 py-8">
+        <ThemeToggle className="absolute top-3 right-3" />
         <div className="flex flex-col items-center text-center">
           {profile.photoUrl ? (
             <img
