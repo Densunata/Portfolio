@@ -1,23 +1,22 @@
 import type { Project } from '@/types/content'
 
-import { ImagePlaceholder } from './ImagePlaceholder'
-
 interface ProjectImageProps {
   project: Pick<Project, 'name' | 'coverImage'>
 }
 
-/** Project cover, or a neutral placeholder when no screenshot exists yet. */
+/**
+ * Project cover screenshot. Renders nothing when no real screenshot exists, so
+ * cards never show an empty image area.
+ */
 export function ProjectImage({ project }: ProjectImageProps) {
-  if (project.coverImage) {
-    return (
-      <img
-        src={project.coverImage}
-        alt={`Screenshot of ${project.name}`}
-        loading="lazy"
-        className="aspect-video w-full border-b object-cover"
-      />
-    )
-  }
+  if (!project.coverImage) return null
 
-  return <ImagePlaceholder className="border-b" />
+  return (
+    <img
+      src={project.coverImage}
+      alt={`Screenshot of ${project.name}`}
+      loading="lazy"
+      className="aspect-video w-full border-b object-cover object-top"
+    />
+  )
 }

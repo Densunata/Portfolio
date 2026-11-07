@@ -35,7 +35,7 @@ export const pages: Record<PageKey, PageContent> = {
     title: 'Projects',
     heading: 'Projects',
     intro:
-      'Professional, training, and academic projects. Each case study covers my role, the technologies used, and key implementation details.',
+      'Personal, professional, training, and academic projects. Each case study covers my role, the technologies used, and key implementation details.',
     metaDescription: `Projects by ${profile.name}: ${projects.map((project) => project.name).join(', ')}.`,
   },
   experience: {

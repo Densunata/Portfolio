@@ -15,7 +15,7 @@ interface PageHeaderProps {
   actions?: ReactNode
 }
 
-/** Top-of-page band with the page's single `<h1>`. */
+/** Top-of-page intro with the page's single `<h1>`. */
 export function PageHeader({
   title,
   eyebrow,
@@ -25,25 +25,25 @@ export function PageHeader({
   actions,
 }: PageHeaderProps) {
   return (
-    <header className="border-b bg-muted/60">
-      <Container className="py-12 sm:py-16">
+    <header>
+      <Container className="pt-8 pb-8 sm:pt-12 sm:pb-10 lg:pt-14">
         {before}
-        <Reveal className={before ? 'mt-8' : undefined}>
+        <Reveal className={before ? 'mt-6' : undefined}>
           {eyebrow && (
-            <p className="text-sm font-semibold tracking-wider text-primary uppercase">{eyebrow}</p>
+            <p className="text-xs font-bold tracking-[0.14em] text-primary uppercase">{eyebrow}</p>
           )}
           <h1
             id={titleId}
-            className="mt-2 text-3xl font-bold tracking-tight text-balance text-foreground sm:text-4xl lg:text-5xl"
+            className="mt-2 text-4xl font-bold tracking-tight text-balance text-foreground sm:text-5xl"
           >
             {title}
           </h1>
           {description && (
-            <p className="mt-4 max-w-3xl text-lg text-pretty text-muted-foreground">
+            <p className="mt-4 max-w-3xl text-base text-pretty text-muted-foreground sm:text-lg">
               {description}
             </p>
           )}
-          {actions && <div className="mt-8 flex flex-wrap gap-3">{actions}</div>}
+          {actions && <div className="mt-7 flex flex-wrap gap-3">{actions}</div>}
         </Reveal>
       </Container>
     </header>

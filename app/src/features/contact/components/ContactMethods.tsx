@@ -1,8 +1,8 @@
 import { Mail, MapPin, type LucideIcon } from 'lucide-react'
 
+import { IconTile } from '@/components/shared/IconTile'
 import { Reveal } from '@/components/shared/Reveal'
 import { socialIcons, type IconComponent } from '@/components/shared/social-icons'
-import { Card, CardContent } from '@/components/ui/card'
 import { profile } from '@/content/profile'
 
 interface ContactMethod {
@@ -38,32 +38,29 @@ function getContactMethods(): ContactMethod[] {
 /** Contact details from `profile`: email, social profiles, and general location. */
 export function ContactMethods() {
   return (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid gap-3 @xl:grid-cols-2 @3xl:grid-cols-3">
       {getContactMethods().map(({ id, label, value, Icon, href, external }, index) => (
         <li key={id}>
-          <Reveal delay={index * 0.05} className="h-full">
-            <Card className="h-full py-6">
-              <CardContent className="flex gap-4 px-6">
-                <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-accent text-accent-foreground">
-                  <Icon aria-hidden="true" className="size-5" />
-                </span>
-                <div className="min-w-0">
-                  <h3 className="font-semibold text-foreground">{label}</h3>
-                  {href ? (
-                    <a
-                      href={href}
-                      {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
-                      className="mt-1 block text-sm font-medium break-words text-primary underline-offset-4 hover:underline"
-                    >
-                      {value}
-                      {external && <span className="sr-only"> (opens in a new tab)</span>}
-                    </a>
-                  ) : (
-                    <p className="mt-1 text-sm text-muted-foreground">{value}</p>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+          <Reveal
+            delay={index * 0.05}
+            className="flex h-full gap-4 rounded-xl border bg-muted/40 p-5"
+          >
+            <IconTile icon={Icon} tone="soft" className="size-10" />
+            <div className="min-w-0">
+              <h3 className="text-sm font-semibold text-foreground">{label}</h3>
+              {href ? (
+                <a
+                  href={href}
+                  {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
+                  className="mt-1 block text-sm font-medium break-words text-primary underline-offset-4 hover:underline"
+                >
+                  {value}
+                  {external && <span className="sr-only"> (opens in a new tab)</span>}
+                </a>
+              ) : (
+                <p className="mt-1 text-sm text-muted-foreground">{value}</p>
+              )}
+            </div>
           </Reveal>
         </li>
       ))}

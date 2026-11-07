@@ -1,8 +1,10 @@
+import { Briefcase } from 'lucide-react'
 import { Link } from 'react-router'
 
 import { PageHeader } from '@/components/shared/PageHeader'
 import { ResumeButton } from '@/components/shared/ResumeButton'
 import { Section } from '@/components/shared/Section'
+import { SectionGrid } from '@/components/shared/SectionGrid'
 import { Button } from '@/components/ui/button'
 import { pages } from '@/content/site'
 import { usePageMetadata } from '@/hooks/usePageMetadata'
@@ -29,9 +31,11 @@ export function ExperiencePage() {
           </>
         }
       />
-      <Section id="employment" title="Employment history">
-        <ExperienceTimeline />
-      </Section>
+      <SectionGrid>
+        <Section id="employment" title="Employment history" icon={Briefcase}>
+          <ExperienceTimeline />
+        </Section>
+      </SectionGrid>
     </>
   )
 }

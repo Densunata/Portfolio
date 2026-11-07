@@ -13,8 +13,23 @@
       content="Raiden A. Victor: Programmer and System Developer specializing in full-stack web applications with .NET, React, and Laravel."
     />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#1e3a6e" />
-    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#5c7e8f" />
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- Sets the theme before first paint so the wrong one never flashes.
+         Keep in sync with app/src/lib/theme.ts (enforced by a test). -->
+    <script>
+      ;(function () {
+        var saved = /(?:^|;\s*)portfolio-theme=(dark|light)(?:;|$)/.exec(document.cookie)
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        var theme = saved ? saved[1] : prefersDark ? 'dark' : 'light'
+        document.documentElement.classList.toggle('dark', theme === 'dark')
+        document.querySelector('meta[name="color-scheme"]').setAttribute('content', theme)
+        document
+          .querySelector('meta[name="theme-color"]')
+          .setAttribute('content', theme === 'dark' ? '#12191d' : '#5c7e8f')
+      })()
+    </script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

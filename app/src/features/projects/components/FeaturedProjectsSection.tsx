@@ -1,28 +1,35 @@
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, FolderKanban } from 'lucide-react'
 import { Link } from 'react-router'
 
-import { Section } from '@/components/shared/Section'
+import { Section, type SectionSpan } from '@/components/shared/Section'
 import { Button } from '@/components/ui/button'
 import { featuredProjects } from '@/content/projects'
 
 import { ProjectGrid } from './ProjectGrid'
 
-export function FeaturedProjectsSection() {
+interface FeaturedProjectsSectionProps {
+  span?: SectionSpan
+}
+
+export function FeaturedProjectsSection({ span }: FeaturedProjectsSectionProps) {
   return (
     <Section
       id="projects"
-      tone="muted"
       eyebrow="Projects"
       title="Featured projects"
-      description="Selected work from professional training, industry experience, and academic research."
+      description="Selected work from personal projects, professional training, and industry experience."
+      icon={FolderKanban}
+      span={span}
+      action={
+        <Button asChild variant="outline">
+          <Link to="/projects">
+            View all projects
+            <ArrowRight aria-hidden="true" data-icon="inline-end" />
+          </Link>
+        </Button>
+      }
     >
       <ProjectGrid projects={featuredProjects} />
-      <Button asChild variant="outline" size="lg" className="mt-10">
-        <Link to="/projects">
-          View all projects
-          <ArrowRight aria-hidden="true" data-icon="inline-end" />
-        </Link>
-      </Button>
     </Section>
   )
 }

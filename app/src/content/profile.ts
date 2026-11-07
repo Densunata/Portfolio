@@ -12,7 +12,9 @@ export const profile: Profile = {
     'Equipped with strong analytical, problem-solving, and communication skills, with a passion for leveraging technology to improve business processes and user experience.',
   ],
   coreStack: ['C# / .NET', 'ASP.NET Core', 'React', 'TypeScript', 'Laravel', 'PostgreSQL'],
+  coreStackHeading: 'Technologies I work with',
   location: 'Rizal, Philippines',
+  photoUrl: '/images/profile.jpg',
   email: 'anoreraiden4@gmail.com',
   socials: [
     {
@@ -22,9 +24,9 @@ export const profile: Profile = {
     },
   ],
   resume: {
-    href: '/resume/RaidenVictor-CV-Public.pdf',
-    // Pending: flip to true once the redacted PDF is added to app/public/resume/.
-    available: false,
+    href: '/resume/Raiden-Victor-CV.pdf',
+    // Redacted CV (no phone number or street address) in app/public/resume/.
+    available: true,
   },
   contactMessage:
     'I am open to opportunities in software and system development. Whether you are a recruiter, an employer, or someone with a project in mind, feel free to reach out by email or LinkedIn.',

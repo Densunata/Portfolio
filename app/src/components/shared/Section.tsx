@@ -2,28 +2,46 @@ import type { ReactNode } from 'react'
 
 import { cn } from '@/lib/utils'
 
-import { Container } from './Container'
 import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
+import type { IconComponent } from './social-icons'
 
-interface SectionProps {
+/** Columns a panel spans in a `SectionGrid` on large screens. */
+export type SectionSpan = 'full' | 'wide' | 'narrow'
+
+const spanClasses: Record<SectionSpan, string> = {
+  full: 'lg:col-span-12',
+  wide: 'lg:col-span-7',
+  narrow: 'lg:col-span-5',
+}
+
+export interface SectionProps {
   /** Anchor id, also used for in-page navigation (`/#id`). */
   id: string
   eyebrow?: string
   title: string
   description?: string
-  /** `muted` adds a tinted band to separate adjacent sections. */
-  tone?: 'default' | 'muted'
+  /** Decorative icon shown in the panel header. */
+  icon?: IconComponent
+  /** Rendered at the end of the header row (e.g. a "View all" link). */
+  action?: ReactNode
+  span?: SectionSpan
   children: ReactNode
 }
 
-/** A homepage/content section: anchor, accessible heading, and consistent spacing. */
+/**
+ * A content panel: anchor, accessible heading, and consistent padding. Place
+ * panels inside a `SectionGrid`. The body is a container-query context, so lists
+ * inside adapt to the panel's width rather than the viewport's.
+ */
 export function Section({
   id,
   eyebrow,
   title,
   description,
-  tone = 'default',
+  icon,
+  action,
+  span = 'full',
   children,
 }: SectionProps) {
   const headingId = `${id}-heading`
@@ -32,19 +50,22 @@ export function Section({
     <section
       id={id}
       aria-labelledby={headingId}
-      className={cn('scroll-mt-16 py-16 sm:py-24', tone === 'muted' && 'border-y bg-muted/60')}
+      className={cn(
+        'flex min-w-0 scroll-mt-20 flex-col rounded-2xl bg-card p-5 text-card-foreground shadow-xs ring-1 ring-foreground/10 sm:p-6 lg:scroll-mt-8 lg:p-7',
+        spanClasses[span],
+      )}
     >
-      <Container>
-        <Reveal>
-          <SectionHeading
-            id={headingId}
-            eyebrow={eyebrow}
-            title={title}
-            description={description}
-          />
-        </Reveal>
-        <div className="mt-10 sm:mt-12">{children}</div>
-      </Container>
+      <Reveal className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
+        <SectionHeading
+          id={headingId}
+          icon={icon}
+          eyebrow={eyebrow}
+          title={title}
+          description={description}
+        />
+        {action}
+      </Reveal>
+      <div className="@container mt-6 flex-1">{children}</div>
     </section>
   )
 }

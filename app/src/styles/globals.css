@@ -3,7 +3,8 @@
 @import 'shadcn/tailwind.css';
 @import '@fontsource-variable/geist';
 
-/* Dark mode is class-based (`.dark` on <html>). No toggle yet; tokens are ready. */
+/* Dark mode is class-based: `.dark` on <html>, set by app/src/lib/theme.ts and,
+   before first paint, by the inline script in index.html. */
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -36,53 +37,60 @@
   --radius-2xl: calc(var(--radius) * 1.8);
 }
 
-/* Navy + white. Text/background pairs are chosen to meet WCAG AA (>= 4.5:1). */
+/* Figma "Frosted aura": #5C7E8F, #A2A2A2, #D4DDE2, #FFFFFF. #5C7E8F (4.34:1 with
+   white) and #A2A2A2 (2.55:1 on white) miss WCAG AA for text, so text and solid
+   fills use deeper shades of the same slate. Pairs meet AA (>= 4.5:1). */
 :root {
+  color-scheme: light;
   --radius: 0.625rem;
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.21 0.04 262);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.21 0.04 262);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.21 0.04 262);
+  --background: #ffffff;
+  --foreground: #1e2c34;
+  --card: #ffffff;
+  --card-foreground: #1e2c34;
+  --popover: #ffffff;
+  --popover-foreground: #1e2c34;
 
-  --primary: oklch(0.32 0.09 262);
-  --primary-foreground: oklch(0.985 0.004 250);
-  --secondary: oklch(0.965 0.01 255);
-  --secondary-foreground: oklch(0.28 0.07 262);
-  --muted: oklch(0.965 0.01 255);
-  --muted-foreground: oklch(0.48 0.03 258);
-  --accent: oklch(0.94 0.02 258);
-  --accent-foreground: oklch(0.28 0.07 262);
+  --primary: #4d6e80;
+  --primary-foreground: #ffffff;
+  --secondary: #d4dde2;
+  --secondary-foreground: #1e2c34;
+  --muted: #f1f4f6;
+  --muted-foreground: #4f5f68;
+  --accent: #e8edf0;
+  --accent-foreground: #1e2c34;
 
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.91 0.014 255);
-  --input: oklch(0.91 0.014 255);
-  --ring: oklch(0.5 0.12 262);
+  --border: #d4dde2;
+  --input: #a2a2a2;
+  --ring: #5c7e8f;
 }
 
+/* The palette has no dark colors: surfaces are dark shades of its slate. */
 .dark {
-  --background: oklch(0.17 0.03 262);
-  --foreground: oklch(0.97 0.005 250);
-  --card: oklch(0.21 0.035 262);
-  --card-foreground: oklch(0.97 0.005 250);
-  --popover: oklch(0.21 0.035 262);
-  --popover-foreground: oklch(0.97 0.005 250);
+  color-scheme: dark;
 
-  --primary: oklch(0.8 0.08 255);
-  --primary-foreground: oklch(0.2 0.04 262);
-  --secondary: oklch(0.27 0.035 262);
-  --secondary-foreground: oklch(0.97 0.005 250);
-  --muted: oklch(0.27 0.035 262);
-  --muted-foreground: oklch(0.74 0.025 255);
-  --accent: oklch(0.29 0.045 262);
-  --accent-foreground: oklch(0.97 0.005 250);
+  /* Keep in sync with THEME_COLORS.dark in app/src/lib/theme.ts. */
+  --background: #12191d;
+  --foreground: #ffffff;
+  --card: #1a2328;
+  --card-foreground: #ffffff;
+  --popover: #1a2328;
+  --popover-foreground: #ffffff;
+
+  --primary: #d4dde2;
+  --primary-foreground: #12191d;
+  --secondary: #242f35;
+  --secondary-foreground: #ffffff;
+  --muted: #242f35;
+  --muted-foreground: #a2a2a2;
+  --accent: #2c3940;
+  --accent-foreground: #ffffff;
 
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 16%);
-  --ring: oklch(0.65 0.1 258);
+  --ring: #5c7e8f;
 }
 
 @layer base {

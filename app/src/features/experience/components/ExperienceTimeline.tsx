@@ -6,7 +6,7 @@ import { ExperienceItem } from './ExperienceItem'
 /** All experience entries, most recent first. */
 export function ExperienceTimeline() {
   return (
-    <ol className="space-y-8">
+    <ol className="space-y-5">
       {experience.map((item) => (
         <li key={item.id}>
           <Reveal>

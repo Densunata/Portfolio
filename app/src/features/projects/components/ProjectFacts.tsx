@@ -11,11 +11,12 @@ interface Fact {
 function getFacts(project: Project): Fact[] {
   const experience = getProjectExperience(project)
   const candidates: { label: string; value: string | undefined }[] = [
-    { label: 'Type', value: project.category },
+    { label: 'Type', value: project.projectType ?? project.category },
+    { label: 'Status', value: project.status },
     { label: 'Role', value: project.role },
     { label: 'Organization', value: experience?.organization ?? project.organization },
     { label: 'Engagement', value: experience?.engagement },
-    { label: 'Period', value: experience ? formatDateRange(experience.period) : undefined },
+    { label: 'Period', value: experience ? formatDateRange(experience.period) : project.period },
   ]
   return candidates.filter((fact): fact is Fact => Boolean(fact.value))
 }
@@ -27,7 +28,7 @@ interface ProjectFactsProps {
 /** Key facts about a project. Facts missing from content are omitted, not guessed. */
 export function ProjectFacts({ project }: ProjectFactsProps) {
   return (
-    <Card className="gap-4 py-6">
+    <Card className="gap-4 rounded-2xl py-6 shadow-xs">
       <CardHeader className="px-6">
         <CardTitle>
           <h2

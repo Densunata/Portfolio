@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 
 import { PageHeader } from '@/components/shared/PageHeader'
 import { ResumeButton } from '@/components/shared/ResumeButton'
+import { SectionGrid } from '@/components/shared/SectionGrid'
 import { Button } from '@/components/ui/button'
 import { pages } from '@/content/site'
 import { usePageMetadata } from '@/hooks/usePageMetadata'
@@ -32,11 +33,13 @@ export function AboutPage() {
           </>
         }
       />
-      <AboutSection />
-      <SkillsSection />
-      <EducationSection />
-      <CertificationsSection />
-      <TrainingSection />
+      <SectionGrid>
+        <AboutSection span="wide" />
+        <SkillsSection span="narrow" />
+        <EducationSection span="narrow" />
+        <CertificationsSection span="wide" />
+        <TrainingSection />
+      </SectionGrid>
     </>
   )
 }

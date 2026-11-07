@@ -2,6 +2,7 @@ import { useParams } from 'react-router'
 
 import { Container } from '@/components/shared/Container'
 import { NotFoundPage } from '@/components/shared/NotFoundPage'
+import { SectionGrid } from '@/components/shared/SectionGrid'
 import { getProjectBySlug } from '@/content/projects'
 import { usePageMetadata } from '@/hooks/usePageMetadata'
 import type { Project } from '@/types/content'
@@ -30,17 +31,20 @@ function ProjectCaseStudy({ project }: { project: Project }) {
     <article aria-labelledby={titleId}>
       <CaseStudyHeader project={project} titleId={titleId} />
 
-      <Container className="grid gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16">
+      <SectionGrid className="items-start">
         {/* Facts come first in DOM order so they appear above the content on small screens. */}
-        <aside aria-labelledby="project-facts-heading" className="lg:order-last">
-          <div className="lg:sticky lg:top-24">
-            <ProjectFacts project={project} />
-          </div>
+        <aside
+          aria-labelledby="project-facts-heading"
+          className="lg:sticky lg:top-8 lg:order-last lg:col-span-4"
+        >
+          <ProjectFacts project={project} />
         </aside>
-        <CaseStudyContent project={project} />
-      </Container>
+        <div className="min-w-0 rounded-2xl bg-card p-5 shadow-xs ring-1 ring-foreground/10 sm:p-6 lg:col-span-8 lg:p-8">
+          <CaseStudyContent project={project} />
+        </div>
+      </SectionGrid>
 
-      <Container className="border-t py-12">
+      <Container className="pt-10 sm:pt-12">
         <ProjectPagination project={project} />
       </Container>
     </article>
