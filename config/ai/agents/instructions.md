@@ -43,7 +43,7 @@ app/src/hooks/       shared hooks · app/src/test/ test setup + helpers
 - Tailwind utilities only; no CSS modules or inline `style`. Merge classes with `cn()` from `@/lib/utils`.
 - Use semantic theme tokens (`bg-background`, `text-primary`, `text-muted-foreground`, `border`), never raw palette colors such as `blue-900`. Tokens are defined in `app/src/styles/globals.css`, light and `.dark`.
 - Mobile-first: base styles for small screens, then `sm:`/`md:`/`lg:`. Content width `max-w-6xl` with `px-4 sm:px-6`.
-- Design: navy and white, minimal, professional. No neon colors, heavy gradients, fake terminals, or decorative clutter.
+- Design: Figma's "Frosted aura" palette (`#5C7E8F`, `#A2A2A2`, `#D4DDE2`, `#FFFFFF`) with deeper slate shades where AA contrast needs them, minimal, professional. No neon colors, heavy gradients, fake terminals, or decorative clutter.
 - Motion: subtle (opacity/translate, <= 0.4s). Prefer the shared `<Reveal>`. Otherwise use `m.*` from `motion/react`, never `motion.*`: the app runs `LazyMotion strict` to keep the bundle small. `MotionConfig reducedMotion="user"` is global; don't bypass it.
 - Project images: real screenshots only (`app/public/images`, served at `/images`). Without one, project cards omit the image area and the case-study Screenshots section shows `ImagePlaceholder`.
 - Add shadcn components via `npx shadcn@latest add <name>`; don't hand-edit `components/ui` except for deliberate theme tweaks.

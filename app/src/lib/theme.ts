@@ -7,10 +7,10 @@ export type Theme = 'dark' | 'light'
  */
 export const THEME_COOKIE = 'portfolio-theme'
 
-/** Browser UI color per theme: the brand navy, and the dark `--background` token. */
+/** Browser UI color per theme: the brand slate, and the dark `--background` token. */
 export const THEME_COLORS: Record<Theme, string> = {
-  light: '#1e3a6e',
-  dark: '#0a111f',
+  light: '#5c7e8f',
+  dark: '#12191d',
 }
 
 export function readThemeCookie(cookie: string): Theme | null {
