@@ -10,10 +10,10 @@ import {
 import { NavLink } from 'react-router'
 
 import { profile } from '@/content/profile'
-import { getInitials } from '@/lib/format'
 import { siteNavItems } from '@/lib/navigation'
 import { cn } from '@/lib/utils'
 
+import { ProfileAvatar } from './ProfileAvatar'
 import { SocialLinks } from './SocialLinks'
 import { ThemeToggle } from './ThemeToggle'
 
@@ -36,20 +36,7 @@ export function Sidebar({ className }: SidebarProps) {
       <div className="relative flex flex-1 flex-col overflow-y-auto px-5 py-8">
         <ThemeToggle className="absolute top-3 right-3" />
         <div className="flex flex-col items-center text-center">
-          {profile.photoUrl ? (
-            <img
-              src={profile.photoUrl}
-              alt=""
-              className="size-24 rounded-full object-cover shadow-sm ring-4 ring-muted"
-            />
-          ) : (
-            <span
-              aria-hidden="true"
-              className="grid size-24 place-items-center rounded-full bg-primary text-2xl font-bold tracking-tight text-primary-foreground shadow-sm ring-4 ring-muted"
-            >
-              {getInitials(profile.name)}
-            </span>
-          )}
+          <ProfileAvatar className="size-32 rounded-full text-3xl shadow-sm ring-4 ring-muted" />
           <p className="mt-4 text-lg font-bold tracking-tight text-foreground">{profile.name}</p>
           <p className="mt-0.5 text-sm text-muted-foreground">{profile.title}</p>
           <p className="mt-2 inline-flex items-center gap-1 text-xs text-muted-foreground">

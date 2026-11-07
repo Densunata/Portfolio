@@ -2,12 +2,12 @@ import { Link, NavLink } from 'react-router'
 
 import { Button } from '@/components/ui/button'
 import { profile } from '@/content/profile'
-import { getInitials } from '@/lib/format'
 import { contactNavItem } from '@/lib/navigation'
 import { cn } from '@/lib/utils'
 
 import { Container } from './Container'
 import { MobileNavigation } from './MobileNavigation'
+import { ProfileAvatar } from './ProfileAvatar'
 import { ThemeToggle } from './ThemeToggle'
 
 interface NavbarProps {
@@ -25,12 +25,7 @@ export function Navbar({ className }: NavbarProps) {
           to="/"
           className="flex min-w-0 items-center gap-2.5 rounded-md font-semibold tracking-tight"
         >
-          <span
-            aria-hidden="true"
-            className="grid size-8 shrink-0 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground"
-          >
-            {getInitials(profile.name)}
-          </span>
+          <ProfileAvatar decorative className="size-9 rounded-full text-xs" />
           <span className="truncate text-foreground">{profile.name}</span>
         </Link>
 

@@ -30,6 +30,7 @@ describe('HomePage', () => {
       'Technical skills',
       'Building reliable software, end to end',
       'Featured projects',
+      'Academic projects',
       'Professional experience',
       'Education',
       'Certifications',
@@ -58,6 +59,31 @@ describe('HomePage', () => {
         within(projects).getByRole('heading', { level: 3, name: project.name }),
       ).toBeInTheDocument()
     }
+  })
+
+  it('shows the capstone under academic projects, not featured projects', async () => {
+    renderRoute('/')
+    const name = 'Medication Management System'
+    const academic = await screen.findByRole('region', { name: 'Academic projects' })
+    const featured = screen.getByRole('region', { name: 'Featured projects' })
+
+    expect(within(academic).getByRole('heading', { level: 3, name })).toBeInTheDocument()
+    expect(within(featured).queryByRole('heading', { level: 3, name })).not.toBeInTheDocument()
+  })
+
+  it('features Prime with its development status', async () => {
+    renderRoute('/')
+    const region = await screen.findByRole('region', { name: 'Featured projects' })
+
+    const card = within(region)
+      .getByRole('heading', { level: 3, name: /^Prime/ })
+      .closest('li')
+    if (!(card instanceof HTMLElement)) throw new Error('Expected Prime to render in a list item')
+    expect(card).toHaveTextContent('In Development')
+    expect(within(card).getByRole('link', { name: /View details/ })).toHaveAttribute(
+      'href',
+      '/projects/prime',
+    )
   })
 
   it('offers the resume to view in a new tab and to download', async () => {

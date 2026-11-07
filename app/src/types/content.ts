@@ -86,6 +86,28 @@ export type PendingDetail =
   | 'timeline'
   | 'links'
 
+export type CaseStudySectionId =
+  | 'overview'
+  | 'purpose'
+  | 'role'
+  | 'features'
+  | 'implementation'
+  | 'technologies'
+  | 'status'
+  | 'screenshots'
+
+/** A case-study section's position, with an optional heading override. */
+export interface CaseStudySectionLayout {
+  id: CaseStudySectionId
+  title?: string
+}
+
+/** Keeps finished work separate from work that is not finished yet. */
+export interface DevelopmentStatus {
+  implemented: string[]
+  inDevelopment: string[]
+}
+
 /**
  * Long-form content for `/projects/:slug`. Optional sections are omitted from
  * the page when absent; list them in `pending` instead of guessing.
@@ -97,11 +119,26 @@ export interface CaseStudy {
   purpose?: string[]
   /** What Raiden personally did. */
   contributions?: string[]
+  /** Implemented, user-facing capabilities. */
+  features?: string[]
   /** Key technical implementation details. */
   implementation?: string[]
+  /** For projects still being built. */
+  developmentStatus?: DevelopmentStatus
   screenshots?: Screenshot[]
+  /**
+   * Replaces the default section order and headings. List every section that
+   * has content; `content.test.ts` enforces this.
+   */
+  sections?: CaseStudySectionLayout[]
   /** Maintainer-only list of missing details. Never rendered. */
   pending?: PendingDetail[]
+}
+
+/** A labelled subset of a project's technologies, e.g. software or hardware. */
+export interface TechGroup {
+  label: string
+  items: string[]
 }
 
 export interface Project {
@@ -110,6 +147,10 @@ export interface Project {
   name: string
   summary: string
   category: string
+  /** "Type" in the project facts, when it differs from `category`. */
+  projectType?: string
+  /** Current state, e.g. "In Development". Omit for finished work. */
+  status?: string
   role?: string
   /**
    * Related `Experience.id`. The case study derives organization, period, and
@@ -118,8 +159,16 @@ export interface Project {
   experienceId?: string
   /** Organization or client, when there is no related experience entry. */
   organization?: string
+  /** Period as written, when there is no related experience entry. */
+  period?: string
   tech: string[]
+  /** Subset of `tech` for the project card, when the full list is too long. */
+  cardTech?: string[]
+  /** Splits `tech` under subheadings on the case study. Must cover all of `tech`. */
+  techGroups?: TechGroup[]
   featured: boolean
+  /** School work, listed apart from personal and professional projects. */
+  academic?: boolean
   links?: Link[]
   /** Public path under `/images`. */
   coverImage?: string

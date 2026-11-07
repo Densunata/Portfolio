@@ -17,7 +17,7 @@ export function FeaturedProjectsSection({ span }: FeaturedProjectsSectionProps) 
       id="projects"
       eyebrow="Projects"
       title="Featured projects"
-      description="Selected work from professional training, industry experience, and academic research."
+      description="Selected work from personal projects, professional training, and industry experience."
       icon={FolderKanban}
       span={span}
       action={

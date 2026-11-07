@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router'
 
 import { TechnologyList } from '@/components/shared/TechnologyBadge'
+import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 import type { Project } from '@/types/content'
 
@@ -17,9 +18,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <ProjectImage project={project} />
       <div className="flex flex-1 flex-col gap-3 p-5">
         <div>
-          <p className="text-[0.6875rem] font-bold tracking-[0.14em] text-primary uppercase">
-            {project.category}
-          </p>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="text-[0.6875rem] font-bold tracking-[0.14em] text-primary uppercase">
+              {project.category}
+            </p>
+            {project.status && <Badge variant="outline">{project.status}</Badge>}
+          </div>
           <h3 className="mt-1.5 text-base font-semibold text-foreground">{project.name}</h3>
         </div>
         <p className="text-sm leading-relaxed text-muted-foreground">{project.summary}</p>
@@ -28,7 +32,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <span className="font-medium">Role:</span> {project.role}
           </p>
         )}
-        <TechnologyList items={project.tech} />
+        <TechnologyList items={project.cardTech ?? project.tech} />
         <div className="mt-auto border-t pt-3">
           <Link
             to={`/projects/${project.slug}`}

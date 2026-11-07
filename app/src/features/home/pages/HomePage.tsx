@@ -5,6 +5,7 @@ import { EducationSection } from '@/features/about/components/EducationSection'
 import { SkillsSection } from '@/features/about/components/SkillsSection'
 import { ContactSection } from '@/features/contact/components/ContactSection'
 import { ExperienceSection } from '@/features/experience/components/ExperienceSection'
+import { AcademicProjectsSection } from '@/features/projects/components/AcademicProjectsSection'
 import { FeaturedProjectsSection } from '@/features/projects/components/FeaturedProjectsSection'
 import { usePageMetadata } from '@/hooks/usePageMetadata'
 
@@ -22,6 +23,7 @@ export function HomePage() {
         <SkillsSection span="narrow" />
         <WhatIDoSection />
         <FeaturedProjectsSection />
+        <AcademicProjectsSection />
         <ExperienceSection />
         <EducationSection span="narrow" />
         <CertificationsSection span="wide" />

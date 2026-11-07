@@ -2,12 +2,13 @@ import { cn } from '@/lib/utils'
 import type { Screenshot } from '@/types/content'
 
 import { ImagePlaceholder } from './ImagePlaceholder'
+import { ScreenshotLightbox } from './ScreenshotLightbox'
 
 interface ScreenshotGalleryProps {
   screenshots?: Screenshot[]
 }
 
-/** Project screenshots, or a neutral "coming soon" placeholder. */
+/** Project screenshots (each opens full size in a modal), or a "coming soon" placeholder. */
 export function ScreenshotGallery({ screenshots = [] }: ScreenshotGalleryProps) {
   if (screenshots.length === 0) {
     return <ImagePlaceholder label="Screenshots coming soon" className="rounded-xl border" />
@@ -18,11 +19,12 @@ export function ScreenshotGallery({ screenshots = [] }: ScreenshotGalleryProps) 
       {screenshots.map((screenshot) => (
         <li key={screenshot.src}>
           <figure>
-            <img
-              src={screenshot.src}
-              alt={screenshot.alt}
-              loading="lazy"
-              className="aspect-video w-full rounded-xl border object-cover object-top"
+            <ScreenshotLightbox
+              screenshot={screenshot}
+              // A lone screenshot keeps its own proportions; a grid uses uniform tiles.
+              thumbnailClassName={
+                screenshots.length > 1 ? 'aspect-video object-cover object-top' : 'h-auto'
+              }
             />
             {screenshot.caption && (
               <figcaption className="mt-2 text-sm text-muted-foreground">

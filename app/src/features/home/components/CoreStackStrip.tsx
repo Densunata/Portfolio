@@ -1,5 +1,7 @@
 import { profile } from '@/content/profile'
 
+import { coreStackIcons } from './core-stack-icons'
+
 /** Hero strip listing `profile.coreStack`. */
 export function CoreStackStrip() {
   return (
@@ -15,15 +17,22 @@ export function CoreStackStrip() {
           aria-label="Core stack"
           className="flex flex-1 flex-wrap items-center gap-x-6 gap-y-2.5 xl:justify-between"
         >
-          {profile.coreStack.map((item) => (
-            <li
-              key={item}
-              className="flex items-center gap-2 text-sm font-medium whitespace-nowrap text-foreground"
-            >
-              <span aria-hidden="true" className="size-1.5 rounded-full bg-primary/70" />
-              {item}
-            </li>
-          ))}
+          {profile.coreStack.map((item) => {
+            const Icon = coreStackIcons[item]
+            return (
+              <li
+                key={item}
+                className="flex items-center gap-2 text-sm font-medium whitespace-nowrap text-foreground"
+              >
+                {Icon ? (
+                  <Icon aria-hidden="true" className="size-4 shrink-0 text-primary" />
+                ) : (
+                  <span aria-hidden="true" className="size-1.5 rounded-full bg-primary/70" />
+                )}
+                {item}
+              </li>
+            )
+          })}
         </ul>
       </div>
     </div>

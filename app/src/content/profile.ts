@@ -14,6 +14,7 @@ export const profile: Profile = {
   coreStack: ['C# / .NET', 'ASP.NET Core', 'React', 'TypeScript', 'Laravel', 'PostgreSQL'],
   coreStackHeading: 'Technologies I work with',
   location: 'Rizal, Philippines',
+  photoUrl: '/images/profile.jpg',
   email: 'anoreraiden4@gmail.com',
   socials: [
     {

@@ -4,7 +4,12 @@ import { describe, expect, it } from 'vitest'
 import { certifications, trainings } from '@/content/certifications'
 import { experience } from '@/content/experience'
 import { profile } from '@/content/profile'
-import { getProjectsByExperience, projects } from '@/content/projects'
+import {
+  academicProjects,
+  getProjectsByExperience,
+  nonAcademicProjects,
+  projects,
+} from '@/content/projects'
 import { renderRoute } from '@/test/render-route'
 
 async function renderPage(path: string) {
@@ -34,14 +39,19 @@ describe('/about', () => {
 })
 
 describe('/projects', () => {
-  it('lists every project with a link to its case study', async () => {
+  it.each([
+    ['Personal and professional projects', nonAcademicProjects],
+    ['Academic projects', academicProjects],
+  ])('lists only its own projects under "%s"', async (name, expected) => {
     await renderPage('/projects')
 
-    const list = screen.getByRole('region', { name: 'All projects' })
-    for (const project of projects) {
-      expect(
-        within(list).getByRole('heading', { level: 3, name: project.name }),
-      ).toBeInTheDocument()
+    const list = screen.getByRole('region', { name })
+    expect(
+      within(list)
+        .getAllByRole('heading', { level: 3 })
+        .map((heading) => heading.textContent),
+    ).toEqual(expected.map((project) => project.name))
+    for (const project of expected) {
       expect(
         within(list).getByRole('link', { name: `View details about ${project.name}` }),
       ).toHaveAttribute('href', `/projects/${project.slug}`)

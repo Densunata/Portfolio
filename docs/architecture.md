@@ -10,7 +10,7 @@ app/
       ui/           shadcn/ui generated primitives
       shared/       cross-feature components: layout (SiteLayout, Sidebar, Navbar, MobileNavigation, Footer),
                     building blocks (Container, PageHeader, SectionGrid, Section, SectionHeading,
-                    IconTile, Reveal, ThemeToggle),
+                    IconTile, ProfileAvatar, Reveal, ThemeToggle),
                     and SocialLinks, ResumeButton, TechnologyBadge/TechnologyList, NotFoundPage
     features/
       home|about|projects|experience|contact/
@@ -58,7 +58,7 @@ The full rules for both people and AI agents are in [`config/ai/agents/instructi
 
 ## Homepage
 
-`features/home/pages/HomePage.tsx` composes the sections in order: Hero (with the core-stack strip), About, Skills, What I Do, Featured Projects, Experience, Education, Certifications, Contact. Each section uses the shared `Section` component and lives in the feature it belongs to. The dedicated pages reuse the same section and list components. In-page links such as the hero's "View projects" (`/#projects`) still work, because React Router's `ScrollRestoration` scrolls to the target section.
+`features/home/pages/HomePage.tsx` composes the sections in order: Hero (with the core-stack strip), About, Skills, What I Do, Featured Projects, Academic Projects, Experience, Education, Certifications, Contact. Each section uses the shared `Section` component and lives in the feature it belongs to. The dedicated pages reuse the same section and list components. In-page links such as the hero's "View projects" (`/#projects`) still work, because React Router's `ScrollRestoration` scrolls to the target section.
 
 ## Layout
 
@@ -79,7 +79,7 @@ The full rules for both people and AI agents are in [`config/ai/agents/instructi
 4. **React Router data router (`createBrowserRouter`)** with a single route table in `app/src/app/routes.tsx`. Tests reuse the same table through `createMemoryRouter`.
 5. **No global state library.** Content is static imports, and UI state stays local.
 6. **`cn` package.** Recent shadcn versions install the official `cn` package (a replacement for clsx + tailwind-merge). `@/lib/utils` re-exports it.
-7. **Light and dark themes, modeled on Prime.** `ThemeProvider` holds the theme and `lib/theme.ts` holds the rules: a `portfolio-theme` cookie, else the system setting, applied as `.dark` on `<html>`. Unlike Prime, only an explicit toggle saves the cookie, and an inline script in `index.html` sets the theme before first paint. `lib/theme.test.ts` runs that script so it can't drift from `lib/theme.ts`. Style through tokens; add `dark:` variants only where a token can't express the difference.
+7. **Light and dark themes, modeled on Prime.** `ThemeProvider` holds the theme and `lib/theme.ts` holds the rules: a `portfolio-theme` cookie, else the system setting, applied as `.dark` on `<html>`. Unlike Prime, only an explicit toggle saves the cookie, and an inline script in `index.html` sets the theme before first paint. `lib/theme.test.ts` runs that script so it can't drift from `lib/theme.ts`. Style through tokens; add `dark:` variants only where a token can't express the difference, such as the screenshot lightbox's scrim.
 8. **`usePageMetadata` instead of React 19's `<title>`/`<meta>` hoisting.** Hoisting adds new tags alongside the static ones in `index.html`, which leaves duplicate descriptions and the wrong document title. The hook updates the existing tags in place. No helmet library is needed.
 9. **Disclosure-style mobile menu, not a modal sheet.** A modal locks page scroll, which can stop `/#section` links from scrolling. The menu is an `aria-expanded` disclosure that closes on link click, Escape (focus returns to the toggle), outside click, and any navigation.
 10. **`LazyMotion` with `domAnimation`.** This loads only the Motion features the site uses and cut about 50 KB from the bundle. `strict` mode throws an error if the full `motion.*` component is used.

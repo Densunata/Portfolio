@@ -30,7 +30,7 @@ describe('ProjectDetailPage', () => {
 
       const article = screen.getByRole('article', { name })
       expect(within(article).getByRole('heading', { level: 1, name })).toBeInTheDocument()
-      expect(within(article).getByRole('region', { name: 'Overview' })).toBeInTheDocument()
+      expect(within(article).getByRole('region', { name: /overview/i })).toBeInTheDocument()
       expect(within(article).getByRole('region', { name: 'Screenshots' })).toBeInTheDocument()
       expect(document.title).toBe(`${name} | Raiden A. Victor`)
     },
@@ -54,6 +54,7 @@ describe('ProjectDetailPage', () => {
     expect(sectionHeadings()).toEqual([
       'Project details',
       'Overview',
+      'Purpose',
       'My role and contributions',
       'Technologies used',
       'Key implementation details',
@@ -70,31 +71,166 @@ describe('ProjectDetailPage', () => {
     for (const item of project.tech) expect(tech).toHaveTextContent(item)
   })
 
-  it('omits unverified sections for the Medication Management System', async () => {
-    const project = getProject('medication-management-system')
-    await renderProject(project.slug)
+  describe('Prime case study', () => {
+    it('renders its sections in order, at its own route', async () => {
+      const prime = getProject('prime')
+      await renderProject(prime.slug)
 
-    expect(sectionHeadings()).toEqual([
-      'Project details',
-      'Overview',
-      'My role and contributions',
-      'Screenshots',
-      'More projects',
-    ])
-    expect(screen.queryByRole('list', { name: 'Technologies used' })).not.toBeInTheDocument()
+      expect(document.title).toBe(`${prime.name} | Raiden A. Victor`)
+      expect(sectionHeadings()).toEqual([
+        'Project details',
+        'Project overview',
+        'Purpose',
+        'My role and engineering focus',
+        'Key features',
+        'Architecture and technical implementation',
+        'Technology stack',
+        'Current development status',
+        'Screenshots',
+        'More projects',
+      ])
+    })
 
-    const facts = screen.getByRole('complementary', { name: 'Project details' })
-    expect(facts).toHaveTextContent('St. Camillus Medhaven Nursing Home, Antipolo City')
-    expect(within(facts).queryByText('Period')).not.toBeInTheDocument()
+    it('shows its type, status, and full technology stack', async () => {
+      const prime = getProject('prime')
+      await renderProject(prime.slug)
+
+      const facts = screen.getByRole('complementary', { name: 'Project details' })
+      expect(facts).toHaveTextContent('Personal Project')
+      expect(facts).toHaveTextContent('In Development')
+      expect(within(facts).queryByText('Period')).not.toBeInTheDocument()
+
+      const stack = screen.getByRole('region', { name: 'Technology stack' })
+      const items = within(stack)
+        .getAllByRole('listitem')
+        .map((item) => item.textContent)
+      expect(items).toEqual(prime.tech)
+    })
+
+    it('keeps implemented work separate from work still under development', async () => {
+      const prime = getProject('prime')
+      const status = prime.caseStudy?.developmentStatus
+      if (!status) throw new Error('Expected Prime to have a development status')
+      await renderProject(prime.slug)
+
+      const region = screen.getByRole('region', { name: 'Current development status' })
+      const itemsOf = (name: string) =>
+        within(within(region).getByRole('list', { name }))
+          .getAllByRole('listitem')
+          .map((item) => item.textContent)
+
+      expect(itemsOf('Implemented')).toEqual(status.implemented)
+      expect(itemsOf('Under development')).toEqual(status.inDevelopment)
+      for (const pattern of [
+        /Organization-level interfaces/,
+        /data isolation/,
+        /Business modules/,
+      ]) {
+        expect(status.inDevelopment.some((item) => pattern.test(item))).toBe(true)
+        expect(status.implemented.some((item) => pattern.test(item))).toBe(false)
+      }
+    })
+
+    it('shows no invented links', async () => {
+      const prime = getProject('prime')
+      await renderProject(prime.slug)
+
+      expect(prime.links).toBeUndefined()
+
+      const article = screen.getByRole('article', { name: prime.name })
+      for (const link of within(article).getAllByRole('link')) {
+        expect(link.getAttribute('href')).toMatch(/^\/projects/)
+      }
+    })
+
+    it('does not expose local configuration or repository details', () => {
+      const published = JSON.stringify(getProject('prime'))
+
+      expect(published).not.toMatch(/localhost|github\.com|appsettings|password=|X-Prime|primedb/i)
+    })
+
+    it('links to its neighbouring case studies', async () => {
+      await renderProject('prime')
+
+      const nav = screen.getByRole('navigation', { name: 'More projects' })
+      expect(within(nav).getByRole('link', { name: /Previous project/ })).toHaveAttribute(
+        'href',
+        '/projects/malayohub',
+      )
+      expect(within(nav).getByRole('link', { name: /Next project/ })).toHaveAttribute(
+        'href',
+        '/projects/leave-management-system',
+      )
+    })
   })
 
-  it('shows a screenshot placeholder when no screenshots exist', async () => {
-    await renderProject('leave-management-system')
+  describe('Medication Management System case study', () => {
+    it('renders its sections and facts', async () => {
+      await renderProject('medication-management-system')
 
-    const screenshots = screen.getByRole('region', { name: 'Screenshots' })
-    expect(within(screenshots).getByText('Screenshots coming soon')).toBeInTheDocument()
-    expect(within(screenshots).queryByRole('img')).not.toBeInTheDocument()
+      expect(sectionHeadings()).toEqual([
+        'Project details',
+        'Overview',
+        'Purpose',
+        'My role and contributions',
+        'Key features',
+        'Technologies used',
+        'Key implementation details',
+        'Screenshots',
+        'More projects',
+      ])
+
+      const facts = screen.getByRole('complementary', { name: 'Project details' })
+      expect(facts).toHaveTextContent('Capstone Project')
+      expect(facts).toHaveTextContent('System Analyst & Programmer')
+      expect(facts).toHaveTextContent('St. Camillus Medhaven Nursing Home, Antipolo City, Rizal')
+      expect(facts).toHaveTextContent('School Year 2024–2025')
+    })
+
+    it('lists software and hardware separately', async () => {
+      const project = getProject('medication-management-system')
+      await renderProject(project.slug)
+
+      const region = screen.getByRole('region', { name: 'Technologies used' })
+      expect(within(region).getAllByRole('heading', { level: 3 })).toHaveLength(2)
+      for (const group of project.techGroups ?? []) {
+        expect(
+          within(within(region).getByRole('list', { name: group.label }))
+            .getAllByRole('listitem')
+            .map((item) => item.textContent),
+        ).toEqual(group.items)
+      }
+      expect(
+        within(within(region).getByRole('list', { name: 'Hardware' })).getByText('Arduino Uno'),
+      ).toBeInTheDocument()
+      expect(
+        within(within(region).getByRole('list', { name: 'Software' })).queryByText('Arduino Uno'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('does not claim a live clinical deployment', () => {
+      const published = JSON.stringify(getProject('medication-management-system'))
+
+      expect(published).not.toMatch(/deployed|live |in production|clinical/i)
+    })
   })
+
+  it.each(['malayohub', 'prime', 'leave-management-system', 'medication-management-system'])(
+    'renders %s screenshots with their alt text',
+    async (slug) => {
+      const project = getProject(slug)
+      await renderProject(project.slug)
+
+      const region = screen.getByRole('region', { name: 'Screenshots' })
+      for (const screenshot of project.caseStudy?.screenshots ?? []) {
+        expect(within(region).getByRole('img', { name: screenshot.alt })).toHaveAttribute(
+          'src',
+          screenshot.src,
+        )
+      }
+      expect(within(region).queryByText('Screenshots coming soon')).not.toBeInTheDocument()
+    },
+  )
 
   it('places project details before the main content for small-screen reading order', async () => {
     await renderProject('malayohub')

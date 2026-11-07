@@ -11,11 +11,12 @@ interface Fact {
 function getFacts(project: Project): Fact[] {
   const experience = getProjectExperience(project)
   const candidates: { label: string; value: string | undefined }[] = [
-    { label: 'Type', value: project.category },
+    { label: 'Type', value: project.projectType ?? project.category },
+    { label: 'Status', value: project.status },
     { label: 'Role', value: project.role },
     { label: 'Organization', value: experience?.organization ?? project.organization },
     { label: 'Engagement', value: experience?.engagement },
-    { label: 'Period', value: experience ? formatDateRange(experience.period) : undefined },
+    { label: 'Period', value: experience ? formatDateRange(experience.period) : project.period },
   ]
   return candidates.filter((fact): fact is Fact => Boolean(fact.value))
 }
