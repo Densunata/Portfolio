@@ -44,7 +44,7 @@ Preview URLs are behind Vercel Authentication, so viewers must sign in to Vercel
 
 `vercel link` writes the project link to `.vercel/` and a short-lived `VERCEL_OIDC_TOKEN` to `.env.local`. Both are ignored by Git and left out of the upload. It also tries to connect the GitHub repository automatically, so check the project's Git settings afterwards. When it asks where the code is located, answer `./`.
 
-**Connecting the GitHub repository has production consequences.** Importing the repository from the Vercel dashboard immediately deploys `main` to production. Once a repository is connected, every push to `main` deploys to production and every push to another branch creates a preview. Don't connect it until production is approved.
+**Connecting the GitHub repository has production consequences.** Importing the repository from the Vercel dashboard immediately deploys `main` to production. Once a repository is connected, every push to `main` deploys to production and every push to another branch creates a preview. Vercel is already connected to the GitHub repository. Preview Deployments are allowed for non-production branches, but Production Deployment must remain disabled until explicitly approved. Do not merge deployment-related changes into `main` or trigger a production deployment without authorization.
 
 ### Production deployment
 
