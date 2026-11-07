@@ -1,5 +1,7 @@
 import { Outlet, ScrollRestoration } from 'react-router'
 
+import { getScrollRestorationKey } from '@/lib/scroll'
+
 import { Footer } from './Footer'
 import { Navbar } from './Navbar'
 import { Sidebar } from './Sidebar'
@@ -25,7 +27,7 @@ export function SiteLayout() {
         </main>
         <Footer />
       </div>
-      <ScrollRestoration />
+      <ScrollRestoration getKey={getScrollRestorationKey} />
     </div>
   )
 }
