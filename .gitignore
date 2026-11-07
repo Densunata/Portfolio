@@ -27,5 +27,9 @@ dist-ssr
 # Testing
 coverage
 
+# Vercel CLI (local project link and pulled tokens)
+.vercel
+.env*
+
 # Claude Code (personal settings)
 .claude/settings.local.json

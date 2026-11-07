@@ -2,7 +2,7 @@
 
 Personal portfolio for **Raiden A. Victor, Programmer / System Developer**. It's a frontend-only, content-driven single-page app.
 
-> **Status:** Phase 4 (all pages and deployment readiness). Every route is implemented. The site is ready to deploy once a host is chosen and the SPA rewrite is configured (see [docs/deployment.md](docs/deployment.md)). It has not been deployed.
+> **Status:** Phase 4 (all pages and deployment readiness). Every route is implemented. The site is configured for Vercel (see [docs/deployment.md](docs/deployment.md)). It isn't publicly live: no production domain is assigned yet.
 
 ## Tech stack
 
