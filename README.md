@@ -2,7 +2,7 @@
 
 Personal portfolio for **Raiden A. Victor, Programmer / System Developer**. It's a frontend-only, content-driven single-page app.
 
-> **Status:** Phase 4 (all pages and deployment readiness). Every route is implemented. The site is configured for Vercel (see [docs/deployment.md](docs/deployment.md)). It isn't publicly live: no production domain is assigned yet.
+> **Status:** Phase 4 (all pages and deployment readiness). Every route is implemented. The site is live at <https://victor-portfolio-dusky-eight.vercel.app> on Vercel, and every push to `main` deploys to production (see [docs/deployment.md](docs/deployment.md)).
 
 ## Tech stack
 

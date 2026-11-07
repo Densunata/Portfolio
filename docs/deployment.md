@@ -1,6 +1,6 @@
 # Deployment
 
-The site is a static build: `npm run build` writes everything to `dist/`. It is configured for Vercel. **It isn't publicly live: no production domain is assigned, and all deployments are behind Vercel Authentication.**
+The site is a static build: `npm run build` writes everything to `dist/`. It is hosted on Vercel and **live at <https://victor-portfolio-dusky-eight.vercel.app>**. Every push to `main` deploys to production.
 
 ## Vercel
 
@@ -23,10 +23,10 @@ Vercel serves real files first, so the rewrite doesn't affect `/assets`, `/image
 
 `SITE_URL` is the only one, and it's optional. It's read at build time in `vite.config.ts` and isn't exposed to client code.
 
-| Environment | Value                                                                                                  |
-| ----------- | ------------------------------------------------------------------------------------------------------ |
-| Preview     | Leave unset. Preview URLs change with each deployment.                                                 |
-| Production  | The final public origin, such as `https://<your-domain>`. Add it once the production URL is confirmed. |
+| Environment | Value                                                                    |
+| ----------- | ------------------------------------------------------------------------ |
+| Preview     | Leave unset. Preview URLs change with each deployment.                   |
+| Production  | Set to `https://victor-portfolio-dusky-eight.vercel.app`, the live site. |
 
 ### Preview deployment
 
@@ -40,20 +40,19 @@ vercel deploy
 
 **A new project can't start with a preview.** Vercel assigns a project's first deployment to Production and refuses a preview until that exists (CLI 65.12.1 reports `first_deployment_production`). For this project, that first deployment was made with `vercel deploy --prod --skip-domain`, which assigned no production domain, and later `vercel deploy` runs create previews.
 
-Preview URLs are behind Vercel Authentication, so viewers must sign in to Vercel with access to the project.
+Preview URLs are behind Vercel Authentication, so viewers must sign in to Vercel with access to the project. The production domain is public.
 
 `vercel link` writes the project link to `.vercel/` and a short-lived `VERCEL_OIDC_TOKEN` to `.env.local`. Both are ignored by Git and left out of the upload. It also tries to connect the GitHub repository automatically, so check the project's Git settings afterwards. When it asks where the code is located, answer `./`.
 
-**Connecting the GitHub repository has production consequences.** Importing the repository from the Vercel dashboard immediately deploys `main` to production. Once a repository is connected, every push to `main` deploys to production and every push to another branch creates a preview. Vercel is already connected to the GitHub repository. Preview Deployments are allowed for non-production branches, but Production Deployment must remain disabled until explicitly approved. Do not merge deployment-related changes into `main` or trigger a production deployment without authorization.
+**The GitHub repository is connected to Vercel, with `main` as the production branch.** Every push to `main`, including a merged pull request, deploys to production. Every push to another branch creates a preview, so open changes can be reviewed there first.
 
 ### Production deployment
 
-Only do this after reviewing a preview:
+Merging into `main` is the release step:
 
-1. Merge the reviewed changes into `main`.
-2. Add `SITE_URL` to the Production environment in the Vercel project settings.
-3. Run `vercel deploy --prod`, or connect the GitHub repository so `main` deploys automatically.
-4. Repeat the checks in [Verifying before going live](#verifying-before-going-live) on the production URL, and test a link preview of the homepage.
+1. Review the change on its branch's preview.
+2. Merge the pull request into `main`. Vercel builds and deploys it automatically.
+3. Repeat the checks in [Verifying before going live](#verifying-before-going-live) on the production URL.
 
 ## Build settings for any host
 
@@ -93,7 +92,7 @@ Hashed files in `dist/assets/` can be cached long-term (`Cache-Control: public, 
 
 Known limitation: unknown URLs return HTTP 200 with the in-app not-found page (a "soft 404"), which is normal for SPAs. The page sets `robots: noindex`.
 
-## After choosing a domain
+## Changing the domain
 
-- Set `SITE_URL` in the host's build environment.
+- Update `SITE_URL` in the host's build environment and redeploy. It's read at build time, so the change needs a new build.
 - Optionally add a `sitemap.xml` listing `/`, `/about`, `/projects`, `/experience`, `/contact`, and each `/projects/<slug>`, and reference it from `app/public/robots.txt`. It's omitted for now because it needs absolute URLs.
